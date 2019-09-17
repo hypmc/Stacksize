@@ -24,4 +24,4 @@ but changes to the configuration will not have any effect until the plugin is re
  - Have Java installed.
  - Execute Spigot BuildTools once. This places the latest Bukkit in your local Maven repository.
  
-You can then execute `gradle build` to build.
+You can then execute `./gradlew build` to build.
