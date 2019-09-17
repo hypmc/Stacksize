@@ -1,0 +1,6 @@
+# The maximum stack sizes of selected items. See a list of materials: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+stackSizes:
+  MINECART: 4
+  POTION: 4
+  BREAD: 24
+  COOKED_BEEF: 24
