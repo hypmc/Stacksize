@@ -89,7 +89,7 @@ public class Stacksize extends JavaPlugin implements Listener {
                 mf.setAccessible(true);
                 mf.setInt(material, size);
             }
-            this.getLogger().info(String.format("Set maximum stack size of %-20s to %d.", material.name(), size));
+            this.getLogger().info(String.format("Applied a maximum stack size of %d to %s.", size, material.name()));
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();

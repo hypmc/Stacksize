@@ -20,8 +20,10 @@ but changes to the configuration will not have any effect until the plugin is re
 | Permission | Description | Default |
 | ---------- | ----------- | ------- |
 | `stacksize` | Permission to use the `stacksize` command. | Operator |
-### Build
+### Installation
+Place the Stacksize jar file in the Bukkit server's plugins directory.
+### Building
  - Have Java installed.
  - Execute Spigot BuildTools once. This places the latest Bukkit in your local Maven repository.
  
-You can then execute `./gradlew build` to build.
+You can then execute `./gradlew build` in the project root directory to build.

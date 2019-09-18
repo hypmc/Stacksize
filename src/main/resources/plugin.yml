@@ -9,7 +9,7 @@ commands:
   stacksize:
     description: Change the maximum stack size of a material.
     permission: stacksize
-    usage: stacksize <set | info | inspect>
+    usage: /stacksize <set | info | inspect>
 
 permissions:
   stacksize:
