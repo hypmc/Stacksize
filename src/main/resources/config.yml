@@ -1,6 +1,38 @@
 # The maximum stack sizes of selected items. See a list of materials: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
 stackSizes:
-  MINECART: 4
+
+  # Balance the amount of processed food that can be carried in one inventory slot.
+  BREAD: 16
+  COOKED_BEEF: 16
+  COOKED_PORKCHOP: 16
+  BAKED_POTATO: 16
+  COOKED_CHICKEN: 16
+  COOKED_COD: 16
+  COOKED_MUTTON: 16
+  COOKED_RABBIT: 16
+  COOKED_SALMON: 16
+  PUMPKIN_PIE: 16
+  ENCHANTED_GOLDEN_APPLE: 16
+  GOLDEN_APPLE: 16
+  GOLDEN_CARROT: 16
+  APPLE: 16
+
+  # Make potions more useful by allowing multiple in one inventory slot.
   POTION: 4
-  BREAD: 24
-  COOKED_BEEF: 24
+  SPLASH_POTION: 8
+  LINGERING_POTION: 8
+
+  # Make boats and minecarts easier to carry around by raising their stack sizes from 1 to 4.
+  OAK_BOAT: 4
+  ACACIA_BOAT: 4
+  SPRUCE_BOAT: 4
+  JUNGLE_BOAT: 4
+  BIRCH_BOAT: 4
+  DARK_OAK_BOAT: 4
+
+  MINECART: 4
+  CHEST_MINECART: 4
+  HOPPER_MINECART: 4
+  FURNACE_MINECART: 4
+  TNT_MINECART: 4
+  COMMAND_BLOCK_MINECART: 4
