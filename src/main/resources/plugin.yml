@@ -1,17 +1,24 @@
 name: Stacksize
-description: Modify materials' maximum stack sizes.
-version: 1.0.0
+description: Modify the maximum stack sizes of materials.
+version: 1.0.1
 author: Torm
 main: no.hyp.stacksize.Stacksize
 api-version: 1.14
 
 commands:
   stacksize:
-    description: Change the maximum stack size of a material.
-    permission: stacksize
-    usage: /stacksize <set | info | inspect>
+    description: Modify or view the maximum stack size of a material.
+    usage: /<command> <modify | view | inspect>
 
 permissions:
   stacksize:
-    description: Use stacksize command.
+    description: All Stacksize permissions.
     default: op
+    children: [stacksize.modify, stacksize.view]
+  stacksize.modify:
+    description: Modify maximum stack sizes.
+    default: op
+    children: [stacksize.view]
+  stacksize.view:
+    description: View and inspect maximum stack sizes.
+    default: true

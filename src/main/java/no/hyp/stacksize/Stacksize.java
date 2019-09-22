@@ -39,7 +39,7 @@ public class Stacksize extends JavaPlugin implements Listener {
         for (String mMaterial : getConfig().getConfigurationSection("stackSizes").getKeys(false)) {
             Material material = Material.matchMaterial(mMaterial);
             if (material == null) {
-                this.getLogger().warning(String.format("Unable to match string to material: \"%s\". Skipping.", mMaterial));
+                this.getLogger().warning(String.format("Unable to match \"%s\" to a material. Skipping.", mMaterial));
                 continue;
             }
             int maxStackSize;
@@ -103,46 +103,57 @@ public class Stacksize extends JavaPlugin implements Listener {
         if (command.getName().equalsIgnoreCase("stacksize")) {
             if (arguments.length >= 1) {
                 String subCommand = arguments[0];
-                switch (subCommand) {
-                    case "set":
+                if (subCommand.equalsIgnoreCase("modify")) {
+                    if (sender.hasPermission("stacksize.modify")) {
                         if (arguments.length == 3) {
                             String materialName = arguments[1];
                             Material material = Material.matchMaterial(materialName);
                             if (material == null) {
-                                sender.sendMessage(ChatColor.RED + "There is no material of that name.");
+                                sender.sendMessage(String.format(ChatColor.RED + "Unable to match " + ChatColor.RESET + "%s" + ChatColor.RED + " to a material.", materialName));
                                 return true;
                             }
+                            String mStackSize = arguments[2];
                             int maxStackSize;
                             try {
-                                maxStackSize = Integer.parseInt(arguments[2]);
+                                maxStackSize = Integer.parseInt(mStackSize);
                             } catch (NumberFormatException e) {
-                                sender.sendMessage(String.format(ChatColor.RED + "Unable to parse integer argument %s.", arguments[2]));
+                                sender.sendMessage(String.format(ChatColor.RED + "Unable to parse the integer " + ChatColor.RESET + "%s" + ChatColor.RED + ".", mStackSize));
                                 return true;
                             }
                             modifyStackSize(material, maxStackSize);
                             updateConfiguration(material, maxStackSize);
-                            sender.sendMessage(String.format(ChatColor.YELLOW + "Changed maximum stack size of " + ChatColor.RESET + "%s" + ChatColor.YELLOW + " to " + ChatColor.RESET + "%d" + ChatColor.YELLOW + ".", material, material.getMaxStackSize()));
+                            sender.sendMessage(String.format(ChatColor.YELLOW + "Set the maximum stack size of the material " + ChatColor.RESET + "%s" + ChatColor.YELLOW + " to " + ChatColor.RESET + "%d" + ChatColor.YELLOW + ".", material, maxStackSize));
                             return true;
                         } else {
-                            sender.sendMessage(ChatColor.RED + "/stacksize set <material> <stacksize>");
+                            sender.sendMessage(ChatColor.RED + "/stacksize modify <material> <stacksize>");
                             return true;
                         }
-                    case "info":
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to execute that command.");
+                        return true;
+                    }
+                } else if (subCommand.equalsIgnoreCase("view")) {
+                    if (sender.hasPermission("stacksize.view")) {
                         if (arguments.length == 2) {
                             String materialName = arguments[1];
                             Material material = Material.matchMaterial(materialName);
                             if (material != null) {
-                                sender.sendMessage(String.format(ChatColor.YELLOW + "Material: " + ChatColor.RESET + "%s" + ChatColor.YELLOW + ", maxStackSize: " + ChatColor.RESET + "%d", material, material.getMaxStackSize()));
+                                sender.sendMessage(String.format(ChatColor.YELLOW + "The material " + ChatColor.RESET + "%s" + ChatColor.YELLOW + " has maximum stack size " + ChatColor.RESET + "%d" + ChatColor.YELLOW + ".", material, material.getMaxStackSize()));
                                 return true;
                             } else {
-                                sender.sendMessage(ChatColor.RED + "There is no material of that name.");
+                                sender.sendMessage(String.format(ChatColor.RED + "Unable to match " + ChatColor.RESET + "%s" + ChatColor.RED + " to a material.", materialName));
                                 return true;
                             }
                         } else {
-                            sender.sendMessage(ChatColor.RED + "/stacksize info <material>");
+                            sender.sendMessage(ChatColor.RED + "/stacksize view <material>");
                             return true;
                         }
-                    case "inspect":
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to execute that command.");
+                        return true;
+                    }
+                } else if (subCommand.equalsIgnoreCase("inspect")) {
+                    if (sender.hasPermission("stacksize.view")) {
                         if (arguments.length == 1) {
                             if (sender instanceof Player) {
                                 Player player = (Player) sender;
@@ -159,15 +170,20 @@ public class Stacksize extends JavaPlugin implements Listener {
                             sender.sendMessage(ChatColor.RED + "/stacksize inspect <material>");
                             return true;
                         }
-                    default:
-                        sender.sendMessage(ChatColor.RED + "/stacksize <set | info | inspect>");
+                    } else {
+                        sender.sendMessage(ChatColor.RED + "You do not have permission to execute that command.");
                         return true;
+                    }
+                } else {
+                    sender.sendMessage(ChatColor.RED + "/stacksize <modify | view | inspect>");
+                    return true;
                 }
             }
-            sender.sendMessage(ChatColor.RED + "/stacksize <set | info | inspect>");
+            sender.sendMessage(ChatColor.RED + "/stacksize <modify | view | inspect>");
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -177,14 +193,14 @@ public class Stacksize extends JavaPlugin implements Listener {
                 return new ArrayList<>();
             } else if (arguments.length == 1) {
                 List<String> subCommands = new ArrayList<>();
-                subCommands.add("set");
-                subCommands.add("info");
+                subCommands.add("modify");
+                subCommands.add("view");
                 subCommands.add("inspect");
                 String subCommand = arguments[0];
                 return subCommands.stream().filter(x -> x.startsWith(subCommand.toLowerCase())).collect(Collectors.toList());
             } else if (arguments.length == 2) {
                 String subCommand = arguments[0];
-                if (subCommand.equalsIgnoreCase("set") || subCommand.equalsIgnoreCase("info")) {
+                if (subCommand.equalsIgnoreCase("modify") || subCommand.equalsIgnoreCase("view")) {
                     String mMaterial = arguments[1];
                     return Arrays.stream(Material.values()).filter(x -> x.name().startsWith(mMaterial.toUpperCase())).map(Material::toString).collect(Collectors.toList());
                 } else {
@@ -192,12 +208,13 @@ public class Stacksize extends JavaPlugin implements Listener {
                 }
             } else if (arguments.length == 3) {
                 String subCommand = arguments[0];
-                if (subCommand.equalsIgnoreCase("set")) {
+                if (subCommand.equalsIgnoreCase("modify")) {
                     String number = arguments[2];
                     List<String> stackSizes = new ArrayList<>();
                     stackSizes.add("64");
                     stackSizes.add("32");
                     stackSizes.add("16");
+                    stackSizes.add("8");
                     stackSizes.add("4");
                     stackSizes.add("1");
                     return stackSizes.stream().filter(x -> x.startsWith(number)).collect(Collectors.toList());
