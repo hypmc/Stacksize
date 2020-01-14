@@ -33,8 +33,8 @@ Default configuration: https://github.com/Torm/Stacksize/blob/master/src/main/re
 | ---------- | ----------- | ------- |
 | `version` | The configuration version. Do not change. | `version: 2` |
 | `required` | If the server requires the plugin to run. If true the server is shut down if the plugin encounters an error. | `required: false` |
-| `log` | A selection of events that will be logged.<ul><li>`STACK_SIZE_MODIFIED` - Log when a material's maximum stack size is modified.</li><li>`CONFIGURATION_MODIFIED` - Log when the configuration is modified or is loaded/reloaded.</li></ul> | <pre><code>log:<br />  - STACK_SIZE_MODIFIED <br />  - CONFIGURATION_MODIFIED</code></pre> |
-| `stackSizes` | The maximum stack sizes of the given items. See a list of materials at https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html. Materials that are not items (which cannot be stored in an inventory) are ignored. __It is only recommended to use values from 1 to 64.__ | <pre><code>stackSizes:<br />  POTION: 4<br />  COOKED_BEEF: 16<br />  MINECART: 4</code></pre> |
+| `log` | A selection of events that will be logged.<ul><li>`STACK_SIZE_MODIFIED` - Log when a material's maximum stack size is modified.</li><li>`CONFIGURATION_MODIFIED` - Log when the configuration is modified or is loaded/reloaded.</li></ul> | <pre>log:<br />  - STACK_SIZE_MODIFIED <br />  - CONFIGURATION_MODIFIED</pre> |
+| `stackSizes` | The maximum stack sizes of the given items. See a list of materials at https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html. Materials that are not items (which cannot be stored in an inventory) are ignored. __It is only recommended to use values from 1 to 64.__ | <pre>stackSizes:<br />  POTION: 4<br />  COOKED_BEEF: 16<br />  MINECART: 4</pre> |
 ### Installation
 Place the Stacksize jar file in the Bukkit server's plugins directory.
 ### Building
