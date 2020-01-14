@@ -1,4 +1,25 @@
-# The maximum stack sizes of selected items. See a list of materials: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+# Stacksize Configuration
+# Reference: https://github.com/Torm/Stacksize/blob/master/README.md
+# Updates to this file while the plugin is running will be detected and the configuration will be reloaded.
+
+
+
+# Version of the configuration. Do not change.
+version: 2
+
+# Plugin is required to work. The server is shut down otherwise.
+required: false
+
+# A selection of events that will be logged.
+# STACK_SIZE_MODIFIED: Log when a material's maximum stack size is modified.
+# CONFIGURATION_MODIFIED: Log when the configuration is modified or is loaded/reloaded.
+log:
+  - STACK_SIZE_MODIFIED
+  - CONFIGURATION_MODIFIED
+
+# The maximum stack sizes of materials.
+# See a list of materials: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html.
+# Materials that are not items (which cannot be stored in an inventory) are ignored.
 stackSizes:
 
   # Balance the amount of processed food that can be carried in one inventory slot.
@@ -36,3 +57,5 @@ stackSizes:
   FURNACE_MINECART: 4
   TNT_MINECART: 4
   COMMAND_BLOCK_MINECART: 4
+
+  SADDLE: 16
